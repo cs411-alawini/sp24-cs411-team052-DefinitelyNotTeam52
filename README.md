@@ -1,1 +1,1 @@
-# sp24-cs411-team052-DefinitelyNotTeam52
+# Team052-DefinitelyNotTeam52
