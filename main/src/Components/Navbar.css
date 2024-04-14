@@ -1,0 +1,31 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: rgb(235, 115, 56); /* Your preferred navbar color */
+    padding: 0; /* Adjust padding if needed */
+    width: 100%; /* Navbar fills the width of the viewport */
+}
+
+.navbar > div { /* 这将选择 .navbar 内的直接子 div */
+    flex: 1; /* 使得 logo、搜索栏和用户区域具有相同的宽度 */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 根据需要对齐内容 */
+}
+
+.logo, .search-bar, .user-section {
+    padding: 0 10px; /* 根据需要调整，以确保内容不紧贴边缘 */
+}
+
+.search-bar input {
+    width: 100%; /* 输入框填满其容器 */
+    padding: 0.5em; /* 如果需要，添加内边距 */
+    border: 1px solid #ccc; /* 添加边框样式 */
+    border-radius: 4px; /* 圆角边框 */
+}
+
+/* 你可能需要确保图像的高度或宽度适当，不要超过导航栏的高度 */
+.logo img, .user-section img {
+    height: auto;
+    max-height: 100%; /* 防止图片超出导航栏 */
+}
