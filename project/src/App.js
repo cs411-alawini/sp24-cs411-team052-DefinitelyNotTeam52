@@ -1,29 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Map from './Components/Map.js';  
 import Navbar from './Components/Navbar.js'; 
 import Sidebar from './Components/Sidebar.js'; 
+import LoginModal from './Components/Login'; 
 
 function App() {
-  const handleClick = () => {
-    alert('你好，世界！');
-  };
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-      <Navbar />
-            <div className="main-content">
-                <Sidebar />
-                <div className="map-table-container">
-                    <Map />
-                </div>
+    const handleLoginClick = () => {
+        setLoginModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setLoginModalOpen(false);
+    };
+
+    return (
+      <div className="App">
+        <header className="App-header">
+          <Navbar onLoginClick={handleLoginClick} />
+          <div className="main-content">
+            <Sidebar />
+            <div className="map-table-container">
+              <Map />
             </div>
-        <p>这是一个基础示例。</p>
-        <button onClick={handleClick}>点击我</button>
-      </header>
-    </div>
-  );
+          </div>
+        </header>
+        {/* Conditionally render the LoginModal based on isLoginModalOpen */}
+        {isLoginModalOpen && (
+          <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseModal} />
+        )}
+      </div>
+    );
 }
 
 export default App;
