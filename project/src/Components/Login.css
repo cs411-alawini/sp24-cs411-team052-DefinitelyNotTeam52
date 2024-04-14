@@ -1,0 +1,44 @@
+.login-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .login-modal-body {
+    margin-top: 10px;
+  }
+  
+  .login-modal-close-btn {
+    background: none;
+    border: none;
+    font-size: large;
+    cursor: pointer;
+  }
+  
+  .login-modal-submit-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+  }
+  
+  /* Add additional styling as needed */
+  
