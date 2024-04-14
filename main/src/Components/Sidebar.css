@@ -1,0 +1,16 @@
+.sidebar {
+    width: 200px; /* Adjust width as needed */
+    background-color: #f4f4f4;
+    padding: 1em;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 0.5em 0;
+    cursor: pointer;
+}
