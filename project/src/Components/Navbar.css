@@ -4,6 +4,8 @@
     background-color: rgb(235, 115, 56); /* Your preferred navbar color */
     padding: 0; /* Adjust padding if needed */
     width: 100%; /* Navbar fills the width of the viewport */
+    position: fixed;
+    top: 0;
 }
 
 .navbar > div { /* 这将选择 .navbar 内的直接子 div */
