@@ -1,7 +1,6 @@
-import React from 'react';
-import './Map.css'; // 导入 Map 的 CSS 样式
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-
+import React, {forwardRef} from 'react';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import './Map.css'; 
 
 const center = {
   lat: 39.0997,
@@ -9,7 +8,7 @@ const center = {
 };
 
 
-const MapComponent = () => {
+const MapComponent = forwardRef((props, ref) => {
   return (
     <LoadScript
       googleMapsApiKey="AIzaSyBhzfmXlyyjH3UMGM3JvpwFlJHFZZ6j9Ng" // 替换为你的Google Maps API密钥
@@ -21,13 +20,11 @@ const MapComponent = () => {
           zoom={5}
         >
         { /* 子组件如标记可以放在这里 */ }
-        <Marker
-          position={center}
-        />
+        
       </GoogleMap>
       </div>
     </LoadScript>
   );
-}
+});
 
 export default MapComponent;

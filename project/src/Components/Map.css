@@ -1,6 +1,17 @@
 .map-container {
-    width: 100vw; /* 视图宽度的100% */
-    height: calc(100vh - 20px); /* 视图高度减去导航栏高度 */
-    position: relative; /* 如果需要，可添加其他样式 */
-  }
-  
+  height: 100vh; /* 地图容器的高度 */
+  width: calc(100% - 250px); /* 如果侧边栏展开时的宽度，250px 是侧边栏的宽度 */
+  transition: width 0.3s ease-out; /* 平滑过渡效果 */
+  flex: 1; /* Map takes up the remaining space */
+}
+
+.sidebar.collapsed {
+  width: 0; /* 折叠后宽度为0 */
+  overflow: hidden; /* 隐藏内容 */
+}
+
+.map-container.expanded {
+  margin-left: 0; /* 地图容器不留边距 */
+}
+
+

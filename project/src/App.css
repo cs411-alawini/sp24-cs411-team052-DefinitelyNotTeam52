@@ -4,6 +4,7 @@
 }
 
 .App-header {
+  padding-top: 50px;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -23,6 +24,17 @@
   flex-direction: column;
   width: 100%;
 }
+
+.App.sidebar-collapsed .sidebar {
+  width: 0;
+  visibility: hidden; /* 新增 */
+}
+
+.App.sidebar-collapsed .map-container {
+  width: 100%; /* 侧边栏折叠时，地图容器占满全部宽度 */
+  transition: width 0.3s ease-in; /* 平滑过渡效果 */
+}
+
 
 button {
   background-color: #007BFF;
