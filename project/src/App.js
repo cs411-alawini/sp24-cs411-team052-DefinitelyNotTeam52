@@ -72,11 +72,13 @@ function App() {
         <button onClick={toggleSidebar}>
           {isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar'}
         </button>
-        <button onClick={fetchQueryResults}>Load Query Results</button>
       </header>
       <div className="main-content">
         <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
-          <Sidebar />
+          <Sidebar 
+            isSidebarOpen={isSidebarOpen} 
+            fetchQueryResults={fetchQueryResults}
+          />
         </div>
         <Map ref={mapRef}/>
       </div>

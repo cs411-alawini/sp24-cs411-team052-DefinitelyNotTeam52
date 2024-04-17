@@ -1,13 +1,11 @@
 .map-container {
-  height: 100vh; /* 地图容器的高度 */
-  width: calc(100% - 250px); /* 如果侧边栏展开时的宽度，250px 是侧边栏的宽度 */
-  transition: width 0.3s ease-out; /* 平滑过渡效果 */
-  flex: 1; /* Map takes up the remaining space */
+  height: calc(100vh - 50px); /* 地图容器的高度 */
+  flex-grow: 1;
+  transition: flex-grow 0.3s ease-out;
 }
 
 .sidebar.collapsed {
   width: 0; /* 折叠后宽度为0 */
-  overflow: hidden; /* 隐藏内容 */
 }
 
 .map-container.expanded {
