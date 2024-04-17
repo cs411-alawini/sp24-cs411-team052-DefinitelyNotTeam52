@@ -4,8 +4,8 @@
 }
 
 .App-header {
+  padding-top: 50px;
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +16,9 @@
 
 .main-content {
   display: flex;
+  flex-direction: row;
+  margin-top: 0; /* 如果App-header已经有足够的padding，可能不需要额外的margin-top */
+  height: calc(100vh - 50px); /* 假设App-header高度为50px */
 }
 
 .map-table-container {
@@ -23,6 +26,28 @@
   flex-direction: column;
   width: 100%;
 }
+
+.App.sidebar-collapsed .main-content {
+  width: 100%;
+}
+.App .main-content .map-container {
+  margin-left: 250px; /* 设置为sidebar的宽度 */
+}
+
+.App.sidebar-collapsed .main-content .map-container {
+  margin-left: 0; /* 折叠时无边距 */
+}
+
+.App.sidebar-collapsed .sidebar {
+  width: 0;
+  visibility: hidden; /* 新增 */
+}
+
+.App.sidebar-collapsed .map-container {
+  width: 100%; /* 侧边栏折叠时，地图容器占满全部宽度 */
+  transition: width 0.3s ease-in; /* 平滑过渡效果 */
+}
+
 
 button {
   background-color: #007BFF;
