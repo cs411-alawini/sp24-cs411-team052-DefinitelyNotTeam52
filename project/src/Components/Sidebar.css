@@ -1,25 +1,14 @@
 .sidebar {
-    position: fixed; /* 使侧边栏固定在屏幕的左侧 */
-    top: 140px; /* 从顶部开始 */
-    left: 0; /* 从左侧开始 */
-    width: 200px; /* 侧边栏的宽度 */
-    height: calc(100% - 140px); /* 侧边栏的高度 */
-    background-color: #ffa500; /* 橙色背景 */
-    padding: 1em; /* 内边距 */
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* 为侧边栏添加阴影 */
-    transition: width 0.3s, visibility 0.3s;
-    z-index: 1;
+  width: 250px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed position to the left */
+  left: 0; /* Align to the left edge */
+  top: 120px; /* Align to the top edge */
+  bottom: 0; /* Extend to the bottom */
+  background-color: #f4f4f4; /* Light grey background */
+  transition: transform 0.3s ease-out; /* Smooth transition for transform */
+}
 
-  }
-  
-  .sidebar a {
-    display: block; /* 使链接块级显示，占满整个宽度 */
-    margin: 1em 0; /* 链接之间的间距 */
-    color: black; /* 文字颜色 */
-    text-decoration: none; /* 去除下划线 */
-    font-size: 1.2em; /* 文字大小 */
-  }
-  
-  .sidebar a:hover {
-    background-color: #ffc107; /* 鼠标悬停时的背景色 */
-  }
+.sidebar.closed {
+  transform: translateX(-100%); /* Hide sidebar off-screen to the left */
+}
+
