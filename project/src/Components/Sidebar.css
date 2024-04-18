@@ -4,7 +4,7 @@
     left: 0; /* 从左侧开始 */
     width: 200px; /* 侧边栏的宽度 */
     height: calc(100% - 140px); /* 侧边栏的高度 */
-    background-color: #ffa500; /* 橙色背景 */
+    background-color: blue; /* 橙色背景 */
     padding: 1em; /* 内边距 */
     box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* 为侧边栏添加阴影 */
     transition: width 0.3s, visibility 0.3s;
