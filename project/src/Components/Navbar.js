@@ -14,7 +14,7 @@ function Navbar({ onLoginClick }) {
       <div className="user-section">
         {/* onLoginClick is called when the login button is clicked */}
         <button onClick={onLoginClick}>Login</button>
-        <button>Setting</button>
+        <button>Settings</button>
       </div>
     </div>
   );
