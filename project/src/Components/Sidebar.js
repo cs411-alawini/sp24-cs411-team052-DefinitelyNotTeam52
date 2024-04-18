@@ -5,9 +5,9 @@ function Sidebar({ isSidebarOpen, fetchQueryResults }) {
     return (
         <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
             <ul>
-                <li>Create New Table</li>
-                <li>Create New Map</li>
-                <li>Save Current Map</li>
+                <h2>State</h2>
+                <h2>time period</h2>
+                <h2>type</h2>
             </ul>
             <button onClick={fetchQueryResults}>
                 Load Query Results
