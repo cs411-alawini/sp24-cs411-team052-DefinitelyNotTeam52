@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
+// import './style.css';
 import Map from './Components/Map.js';  
 import Navbar from './Components/Navbar.js'; 
 import Sidebar from './Components/Sidebar.js'; 
