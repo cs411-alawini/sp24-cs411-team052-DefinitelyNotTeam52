@@ -1,7 +1,5 @@
 .map-container {
-  height: 100vh; /* 地图容器的高度 */
-  position: relative;
-  top: 120px;
+  height: calc(100vh - 50px); /* 地图容器的高度 */
   flex-grow: 1;
   transition: flex-grow 0.3s ease-out;
 }

@@ -69,8 +69,8 @@ function App() {
     <div className={`App ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
       <header className="App-header">
         <Navbar onLoginClick={handleLoginClick} />
-        <button onClick={toggleSidebar} className={`toggle-button ${!isSidebarOpen ? 'collapsed' : ''}`}>
-          {isSidebarOpen ? '◀' : '▶'}
+        <button onClick={toggleSidebar}>
+          {isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar'}
         </button>
       </header>
       <div className="main-content">

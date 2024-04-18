@@ -13,8 +13,8 @@ function Navbar({ onLoginClick }) {
       </div>
       <div className="user-section">
         {/* onLoginClick is called when the login button is clicked */}
-        <button onClick={onLoginClick}>Login</button>
-        <button>Settings</button>
+        <button onClick={onLoginClick}>登录</button>
+        <button>设置</button>
       </div>
     </div>
   );
