@@ -1,10 +1,18 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;  
+  overflow: hidden; 
+}
+
 .App {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 .App-header {
-  padding-top: 50px;
+  padding-top: 0px;
+  height: 0px;
   background-color: #282c34;
   display: flex;
   flex-direction: column;
@@ -18,7 +26,8 @@
   display: flex;
   flex-direction: row;
   margin-top: 0; /* 如果App-header已经有足够的padding，可能不需要额外的margin-top */
-  height: calc(100vh - 50px); /* 假设App-header高度为50px */
+  height: calc(100vh - 100px); /* 假设App-header高度为50px */
+  transition: margin-left 0.3s ease-out;
 }
 
 .map-table-container {
@@ -27,7 +36,18 @@
   width: 100%;
 }
 
+.App.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #f4f4f4;
+  transition: transform 0.3s ease_out;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
 .App.sidebar-collapsed .main-content {
+  margin-left: 0;
   width: 100%;
 }
 .App .main-content .map-container {
@@ -38,6 +58,19 @@
   margin-left: 0; /* 折叠时无边距 */
 }
 
+.App .toggle-button {
+  position: fixed;
+  top: 400px;
+  left: 250px; /* Adjust this based on sidebar width */
+  cursor: pointer;
+  z-index: 1001;
+  /* transition: left 0.3s ease-out; */
+}
+
+.App.sidebar-collapsed .toggle-button {
+  left: 0; /* Move button to 0 when sidebar is closed */
+}
+
 .App.sidebar-collapsed .sidebar {
   width: 0;
   visibility: hidden; /* 新增 */
@@ -45,7 +78,7 @@
 
 .App.sidebar-collapsed .map-container {
   width: 100%; /* 侧边栏折叠时，地图容器占满全部宽度 */
-  transition: width 0.3s ease-in; /* 平滑过渡效果 */
+  transition: width 0.3s ease-out; /* 平滑过渡效果 */
 }
 
 
@@ -53,7 +86,7 @@ button {
   background-color: #007BFF;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;

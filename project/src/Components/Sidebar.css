@@ -9,17 +9,4 @@
     box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* 为侧边栏添加阴影 */
     transition: width 0.3s, visibility 0.3s;
     z-index: 1; /* 使侧边栏在地图之上 */
-
-  }
-  
-  .sidebar a {
-    display: block; /* 使链接块级显示，占满整个宽度 */
-    margin: 1em 0; /* 链接之间的间距 */
-    color: black; /* 文字颜色 */
-    text-decoration: none; /* 去除下划线 */
-    font-size: 1.2em; /* 文字大小 */
-  }
-  
-  .sidebar a:hover {
-    background-color: #ffc107; /* 鼠标悬停时的背景色 */
-  }
+}

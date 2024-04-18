@@ -8,7 +8,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     <div className="login-modal-overlay"> {/* 使用了 login-modal-overlay 类名 */}
       <div className="login-modal-content">
         <span className="close-button" onClick={onClose}>&times;</span>
-        <h2>Login</h2>
+        <h2>User Login</h2>
         <form>
           <label htmlFor="username">Username:</label> {/* 改为 htmlFor */}
           <input type="text" id="username" name="username" required />
