@@ -8,7 +8,7 @@
     padding: 1em; /* 内边距 */
     box-shadow: 2px 0 5px rgba(0,0,0,0.2); /* 为侧边栏添加阴影 */
     transition: width 0.3s, visibility 0.3s;
-    z-index: 1;
+    z-index: 1; /* 使侧边栏在地图之上 */
 
   }
   
