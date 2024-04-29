@@ -25,7 +25,7 @@ app.get('*', (req, res) => {
 
 
 // 设置端口并启动服务器
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

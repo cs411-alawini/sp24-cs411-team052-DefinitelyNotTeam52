@@ -12,6 +12,6 @@
   "scripts": {
     "start-backend": "cd backend && npm start",
     "start-frontend": "cd project && npm start",
-    "start": "concurrently \"npm run start-backend\" \"wait-on http://localhost:3002 && npm run start-frontend\""
+    "start": "concurrently \"npm run start-backend\" \"wait-on http://localhost:3000 && npm run start-frontend\""
   }
 }
