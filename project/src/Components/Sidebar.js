@@ -9,16 +9,49 @@ function Sidebar({ isSidebarOpen, fetchQueryResults }) {
                     <input type="checkbox" /> State
                 </label>
             </li>
+
             <li>
                 <label>
                     <input type="checkbox" /> Time Period
                 </label>
             </li>
+
             <li>
                 <label>
                     <input type="checkbox" /> Accident Type
                 </label>
             </li>
+
+            <li>
+                <label>
+                    <input type="checkbox" /> State
+                </label>
+            </li>
+
+            <li>
+                <label>
+                    <input type="checkbox" /> State
+                </label>
+            </li>
+
+            <li>
+                <label>
+                    <input type="checkbox" /> State
+                </label>
+            </li>
+
+            <li>
+                <label>
+                    <input type="checkbox" /> State
+                </label>
+            </li>
+
+            <li>
+                <label>
+                    <input type="checkbox" /> State
+                </label>
+            </li>
+            
             <button onClick={fetchQueryResults}>
                 Load Query Results
             </button>
