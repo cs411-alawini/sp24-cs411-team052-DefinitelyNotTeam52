@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "detect-port": "^1.5.1",
     "wait-on": "^7.2.0"
   },
   "scripts": {
@@ -14,4 +15,7 @@
     "start-frontend": "cd project && npm start",
     "start": "concurrently \"npm run start-backend\" \"wait-on http://localhost:3000 && npm run start-frontend\""
   }
+  
+  
+  
 }
