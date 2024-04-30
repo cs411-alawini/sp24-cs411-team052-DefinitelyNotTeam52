@@ -53,8 +53,34 @@ function App() {
   
           // Open a new window and write the results to it
           const newWindow = window.open();
-          newWindow.document.write("<h1>Query Results</h1>");
-          newWindow.document.write("<pre>" + JSON.stringify(data, null, 2) + "</pre>");
+          newWindow.document.write(`
+            <html>
+            <head>
+              <title>Results</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                table { width: 100%; border-collapse: collapse; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+              </style>
+            </head>
+            <body>
+              <h1>Results</h1>
+              <table>
+                <tr>
+                  <th>Company</th>
+                  <th>Derailment Rate</th>
+                </tr>
+                ${data.map(item => `
+                  <tr>
+                    <td>${item.company}</td>
+                    <td>${item.derailment_rate}</td>
+                  </tr>
+                `).join('')}
+              </table>
+            </body>
+            </html>
+          `);
   
         } catch (error) {
           console.error('Failed to parse JSON:', text);
