@@ -3,7 +3,9 @@
     "@react-google-maps/api": "^2.19.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^3.5.2"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
@@ -15,7 +17,4 @@
     "start-frontend": "cd project && npm start",
     "start": "concurrently \"npm run start-backend\" \"wait-on http://localhost:3000 && npm run start-frontend\""
   }
-  
-  
-  
 }

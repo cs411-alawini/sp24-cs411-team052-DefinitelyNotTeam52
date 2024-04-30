@@ -40,17 +40,20 @@ function App() {
   };
 
   // 函数用于从后端获取查询结果并设置状态
-  const fetchQueryResults = () => {
-    fetch('http://localhost:3000/api/query-results')
+  const fetchQueryResults = (startYear, endYear) => {
+    // Ensure that the startYear and endYear are dynamically set from the function arguments
+    const timestamp = new Date().getTime(); // Generate a timestamp for cache busting
+    const url = `http://localhost:3000/api/query-results?startYear=${startYear}&endYear=${endYear}&_=${timestamp}`;
+    
+    fetch(url)
       .then(response => {
         console.log('Response received', response.status);
-        return response.text();
+        return response.json(); // Assuming the response is JSON. Adjust if different.
       })
-      .then(text => {
+      .then(data => {
         try {
-          const data = JSON.parse(text);
-          setQueryResults(data);
-  
+          setQueryResults(data); // Assuming `setQueryResults` is available in the scope to update state
+
           // Open a new window and write the results to it
           const newWindow = window.open();
           newWindow.document.write(`
@@ -81,15 +84,15 @@ function App() {
             </body>
             </html>
           `);
-  
         } catch (error) {
-          console.error('Failed to parse JSON:', text);
+          console.error('Failed to parse JSON:', data);
         }
       })
       .catch(error => {
         console.error('Fetch error:', error);
       });
-  };
+};
+
 
   
   return (
