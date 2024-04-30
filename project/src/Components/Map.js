@@ -1,5 +1,5 @@
-import React, {forwardRef} from 'react';
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import React, { forwardRef, useState, useEffect } from 'react';
+import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import './Map.css'; 
 
 const center = {
@@ -8,6 +8,34 @@ const center = {
 };
 
 const MapComponent = forwardRef((props, ref) => {
+  const [accidents, setAccidents] = useState([]);
+  const [selectedAccident, setSelectedAccident] = useState(null);
+  const [timerId, setTimerId] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/accidents')
+      .then(response => response.json())
+      .then(data => setAccidents(data))
+      .catch(error => console.error('Error fetching accidents:', error));
+  }, []);
+
+  const handleMouseOver = (accident) => {
+    if (timerId) clearTimeout(timerId);
+
+    const newTimerId = setTimeout(() => {
+      setSelectedAccident(accident);
+    }, 1000);  // 三秒后显示信息窗口
+
+    setTimerId(newTimerId);
+  };
+
+  const handleMouseOut = () => {
+    if (timerId) {
+      clearTimeout(timerId);
+      setTimerId(null);
+    }
+    setSelectedAccident(null);
+  };
 
   return (
     <LoadScript
@@ -19,7 +47,31 @@ const MapComponent = forwardRef((props, ref) => {
           center={center}
           zoom={5}
         >
-        { /* 子组件如标记可以放在这里 */ }
+        {accidents.map(accident => (
+            <Marker
+              key={accident.id}
+              position={{ 
+              lat: Number(accident.latitude),  // 使用 Number 确保类型正确
+              lng: Number(accident.longitude)}}
+              onMouseOver={() => handleMouseOver(accident)}
+              onMouseOut={handleMouseOut}
+            />
+          ))}
+
+          {selectedAccident && (
+            <InfoWindow
+              position={{ lat: selectedAccident.latitude, lng: selectedAccident.longitude }}
+              onCloseClick={() => setSelectedAccident(null)}
+            >
+              <div>
+                <h2>Accident Detail</h2>
+                <p><strong>Date:</strong> {selectedAccident.date}</p>
+                <p><strong>Railroad:</strong> {selectedAccident.railroad}</p>
+                <p><strong>Total Derail:</strong> {selectedAccident.total_derail}</p>
+                <p><strong>Accident Cause:</strong> {selectedAccident.acc_cause}</p>
+              </div>
+            </InfoWindow>
+          )}
         
       </GoogleMap>
       </div>
