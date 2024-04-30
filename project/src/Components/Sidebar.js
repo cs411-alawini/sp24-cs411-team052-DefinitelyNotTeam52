@@ -12,10 +12,6 @@ function Sidebar({ isSidebarOpen, fetchQueryResults }) {
             setErrorMessage('Start year must not be greater than end year.'); 
             return; 
         }
-        if (isNaN(parseInt(startYear, 10)) || isNaN(parseInt(endYear, 10))) {
-            setErrorMessage('Please enter valid year numbers.');
-            return; 
-        }
         setErrorMessage('');
 
         // Here, you can integrate the years into your query function or modify the existing fetchQueryResults
