@@ -91,4 +91,15 @@ router.get('/query-results', async (req, res) => {
     }
 });
 
+router.get('/accidents', async (req, res) => {
+  const sqlQuery = 'SELECT ACCIDNO AS "id", LATITUDE AS "latitude", LONGITUD AS "longitude", RR_ACCIDENTS.RAILROAD AS "railroad", DATE AS "date", TOTAL_DERAIL AS "total_derail", ADL_CAUSE_SUBGROUP AS "acc_cause" FROM RR_ACCIDENTS JOIN RR_CLASS ON RR_ACCIDENTS.RAILROAD = RR_CLASS.RAILROAD     JOIN ACCIDENTS_CAUSE ON RR_ACCIDENTS.PRICAUSE = ACCIDENTS_CAUSE.FRA_CAUSE_CODE     WHERE RR_CLASS.RRCLASSIFICATION = 1     AND RR_ACCIDENTS.ACC_TYPE = 1     AND RR_ACCIDENTS.TRAIN_TYPE = "F"     AND RR_ACCIDENTS.TRACK_TYPE = "MS"     AND YEAR(RR_ACCIDENTS.`DATE`) BETWEEN 2013 AND 2022;';
+  try {
+      const [rows] = await pool.query(sqlQuery);
+      res.json(rows);
+  } catch (err) {
+      console.error('Error when fetching accidents data', err);
+      res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
