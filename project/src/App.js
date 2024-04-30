@@ -84,7 +84,6 @@ function App() {
             </body>
             </html>
           `);
-
         } catch (error) {
           console.error('Failed to parse JSON:', data);
         }
