@@ -2,27 +2,12 @@ const express = require('express');
 const router = express.Router();
 const pool = require('./database'); // 确保路径与您的文件结构匹配
 
-// 示例数据库路由
-// router.get('/data', async (req, res) => {
-//     try {
-//         const [rows] = await pool.query('SELECT * FROM your_table_name');
-//         res.json(rows);
-//     } catch (err) {
-//         console.error('Error when fetching data', err);
-//         res.status(500).send('Server error');
-//     }
-// });
-
 // Query
 router.get('/query-results', async (req, res) => {
 
     const startYear = req.query.startYear || '2013';
     const endYear = req.query.endYear || '2022'; 
     const railroadName = req.query.railroadName || 'BNSF';
-
-    // if (parseInt(startYear) > parseInt(endYear)) {
-    //   return res.status(400).json({ message: "Start year must not be greater than end year." });
-    // }
 
     const sqlQuery = `WITH
       accident AS (
@@ -51,39 +36,6 @@ router.get('/query-results', async (req, res) => {
       SELECT accident.rr AS company, (accident.derailment / traffic.mile) * 1000000 AS derailment_rate
       FROM accident
       JOIN traffic ON accident.rr = traffic.rr`;
-
-    // try {
-    //   // Replace 'pool' with your database connection pool
-    //   const [results] = await pool.query(`WITH
-    //   accident AS (
-    //       SELECT RR_CLASS.RAILROAD_SUCCESSOR AS rr, COUNT(*) AS derailment
-    //       FROM RR_ACCIDENTS
-    //       JOIN RR_CLASS ON RR_ACCIDENTS.RAILROAD = RR_CLASS.RAILROAD
-    //       WHERE RR_CLASS.RRCLASSIFICATION = 1
-    //       AND RR_ACCIDENTS.ACC_TYPE = 1
-    //       AND RR_ACCIDENTS.TRAIN_TYPE = 'F'
-    //       AND RR_ACCIDENTS.TRACK_TYPE = 'MS'
-    //       AND YEAR(RR_ACCIDENTS.\`DATE\`) >= 2013
-    //       AND YEAR(RR_ACCIDENTS.\`DATE\`) <= 2022
-    //       GROUP BY RR_CLASS.RAILROAD_SUCCESSOR
-    //   ),
-    //   traffic AS (
-    //       SELECT RR_CLASS.RAILROAD_SUCCESSOR AS rr, SUM(RR_TRAFFIC.FRTRNMI + RR_TRAFFIC.OTHERMI) AS mile
-    //       FROM RR_TRAFFIC
-    //       JOIN RR_CLASS ON RR_TRAFFIC.RAILROAD = RR_CLASS.RAILROAD
-    //       WHERE RR_CLASS.RRCLASSIFICATION = 1
-    //       AND CONCAT('20', RR_TRAFFIC.IYR) >= '2013' 
-    //       AND CONCAT('20', RR_TRAFFIC.IYR) <= '2022'
-    //       GROUP BY RR_CLASS.RAILROAD_SUCCESSOR
-    //   )
-    //   SELECT accident.rr AS company, (accident.derailment / traffic.mile) * 1000000 AS derailment_rate
-    //   FROM accident
-    //   JOIN traffic ON accident.rr = traffic.rr;`);
-    //   res.json(results);
-    // } catch (err) {
-    //   console.error('Error executing query', err);
-    //   res.status(500).json({ message: 'Error executing query', error: err });
-    // }
 
     try {
       const [results] = await pool.query(sqlQuery, [startYear, endYear, railroadName, startYear, endYear, railroadName]);
@@ -117,6 +69,100 @@ router.get('/accidents', async (req, res) => {
   } catch (err) {
       console.error('Error when fetching accidents data', err);
       res.status(500).send('Server error');
+  }
+});
+
+// router.get('/create-trigger', async (req, res) => {
+//   const createTriggerSQL = `
+//       CREATE TRIGGER update_railroad
+//       BEFORE INSERT ON RR_TRAFFIC
+//       FOR EACH ROW
+//       BEGIN
+//           IF NEW.RAILROAD = 'CN' THEN
+//               SET NEW.RAILROAD = 'CNGT';
+//           ELSEIF NEW.RAILROAD = 'CP' THEN
+//               SET NEW.RAILROAD = 'CP(US)';
+//           END IF;
+//       END;
+//   `;
+
+//   try {
+//       await pool.query(createTriggerSQL);
+//       res.send('Trigger created successfully.');
+//   } catch (err) {
+//       console.error('Error creating trigger:', err);
+//       res.status(500).json({ message: 'Error creating trigger', error: err.message });
+//   }
+// });
+
+router.post('/add', async (req, res) => {
+  const { input1, input2, input3, input4, input5, input6, input7, input8, input9, input10 } = req.body;
+  // You would normally perform validation/checking here before inserting into the database
+
+  const sqlQuery = `INSERT INTO RR_TRAFFIC
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  try {
+      const results = await pool.query(sqlQuery, [input1, input2, input3, input4, input5, input6, input7, input8, input9, input10]);
+      res.status(201).json({ success: true, message: 'Data inserted successfully', results });
+  } catch (error) {
+      console.error('Error inserting data:', error);
+      res.status(500).json({ success: false, message: 'Failed to insert data', error: error.message });
+  }
+});
+
+router.post('/modify', async (req, res) => {
+  const { input1, input2, input3, input4, input5, input6, input7, input8, input9, input10 } = req.body;
+
+  // SQL UPDATE Statement
+  const sqlQuery = `
+      UPDATE RR_TRAFFIC
+      SET RAILROAD = ?,
+          IYR = ?,
+          IMO = ?,
+          STATE = ?,
+          COUNTY = ?,
+          YSMI = ?,
+          FRTRNMI = ?,
+          PASTRNMI = ?,
+          OTHERMI = ?
+      WHERE TRAFFIC_CODE = ?;`;
+
+  try {
+      const results = await pool.query(sqlQuery, [input2, input3, input4, input5, input6, input7, input8, input9, input10, input1]);
+      if (results.affectedRows === 0) {
+          res.status(404).json({ success: false, message: "No record found to update" });
+      } else {
+          res.status(200).json({ success: true, message: 'Data updated successfully', results });
+      }
+  } catch (error) {
+      console.error('Error updating data:', error);
+      res.status(500).json({ success: false, message: 'Failed to update data', error: error.message });
+  }
+});
+
+router.post('/delete', async (req, res) => {
+  const { input1 } = req.body;  // 从请求体中获取 input1
+
+  if (!input1) {
+      return res.status(400).json({ success: false, message: 'input1 is required for deletion' });
+  }
+
+  const sqlQuery = 'DELETE FROM RR_TRAFFIC WHERE TRAFFIC_CODE = ?';  // 确保替换 input1_column_name 为您的数据库中对应的列名称
+
+  try {
+      const result = await pool.query(sqlQuery, [input1]);
+      if (result.affectedRows === 0) {
+          // 如果没有行被删除，发送一个没有找到记录的响应
+          res.status(404).json({ success: false, message: "No record found with the given input1" });
+      } else {
+          // 如果删除成功，发送一个成功的响应
+          res.status(200).json({ success: true, message: 'Record deleted successfully' });
+      }
+  } catch (error) {
+      // 处理任何可能的数据库错误
+      console.error('Error deleting data:', error);
+      res.status(500).json({ success: false, message: 'Failed to delete data', error: error.message });
   }
 });
 
