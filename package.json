@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "@react-google-maps/api": "^2.19.3",
+    "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "react-hook-form": "^7.51.3",
+    "react-router-dom": "^6.23.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^3.5.2"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "detect-port": "^1.5.1",
-    "envify": "^4.1.0",
-    "terser": "^5.31.0",
-    "uglifyify": "^5.0.2",
     "wait-on": "^7.2.0"
   },
   "scripts": {
