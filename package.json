@@ -10,6 +10,9 @@
   "devDependencies": {
     "concurrently": "^8.2.2",
     "detect-port": "^1.5.1",
+    "envify": "^4.1.0",
+    "terser": "^5.31.0",
+    "uglifyify": "^5.0.2",
     "wait-on": "^7.2.0"
   },
   "scripts": {

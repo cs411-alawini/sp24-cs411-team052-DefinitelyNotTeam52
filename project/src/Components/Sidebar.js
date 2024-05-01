@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './Sidebar.css'; // Assuming you will create a separate CSS file for the Sidebar
 // import './../style.css';
-function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange }) {
+function Sidebar({ isSidebarOpen, fetchQueryResults, onChange}) {
     const [startYear, setStartYear] = useState('');
     const [endYear, setEndYear] = useState('');
+    const [railroadName, setRailroadName] = useState('');  // 默认为BNSF
     const [errorMessage, setErrorMessage] = useState('');
 
     // Function to handle the submission of the query with the new year filters
@@ -15,11 +16,13 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange }) {
         setErrorMessage('');
 
         // Here, you can integrate the years into your query function or modify the existing fetchQueryResults
-        console.log(`Fetching data from ${startYear} to ${endYear}`);
+        console.log("Submitting Query with:", startYear, endYear, railroadName);
         const timestamp = new Date().getTime();
         // Call the fetchQueryResults function with parameters and timestamp
-        fetchQueryResults(startYear, endYear, timestamp); // Example: Adjust this to match your actual fetching logic
+        fetchQueryResults(startYear, endYear, railroadName, timestamp); // Example: Adjust this to match your actual fetching logic
     };
+
+    
 
     const handleUpdateMap = () => {
         if (parseInt(startYear) > parseInt(endYear)) {
@@ -27,17 +30,13 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange }) {
             return;
         }
         setErrorMessage('');
+        console.log("Submitting Query with:", startYear, endYear, railroadName);
         const timestamp = new Date().getTime();
-        onDateChange(startYear, endYear, timestamp);
+        onChange(startYear, endYear, railroadName, timestamp);
     };
 
     return (
         <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
-            </li>
 
             <li>
                 <label>
@@ -59,46 +58,24 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange }) {
 
             <li>
                 <label>
-                    <input type="checkbox" /> Accident Type
+                    Railroad Company
                 </label>
-            </li>
-
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
-            </li>
-
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
-            </li>
-
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
-            </li>
-
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
-            </li>
-
-            <li>
-                <label>
-                    <input type="checkbox" /> State
-                </label>
+                <input
+                    type="text"
+                    placeholder="Railroad Company (default BNSF)"
+                    value={railroadName}
+                    onChange={(e) => setRailroadName(e.target.value)}
+                />
             </li>
             
             <button onClick={handleQuery}>
                 Load Query Results
             </button>
+
             <button onClick={handleUpdateMap}>
                 Update Map
             </button>
+
             {errorMessage && <div style={{ color: 'red', marginTop: '10px' }}>{errorMessage}</div>}
         </div>
     );

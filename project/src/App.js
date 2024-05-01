@@ -40,15 +40,15 @@ function App() {
     setIsSidebarOpen(!isSidebarOpen); // 切换侧边栏状态
   };
 
-  const handleDateChange = (start, end, timestamp) => {
-    setDateRange({ startYear: start, endYear: end, timestamp });
+  const handleChange = (start, end, name, timestamp) => {
+    setDateRange({ startYear: start, endYear: end, railroadName: name ,timestamp });
 };
 
   // 函数用于从后端获取查询结果并设置状态
-  const fetchQueryResults = (startYear, endYear, timestamp) => {
+  const fetchQueryResults = (startYear, endYear, railroadName) => {
     // Ensure that the startYear and endYear are dynamically set from the function arguments
     const timestamp = new Date().getTime(); // Generate a timestamp for cache busting
-    const url = `http://localhost:3000/api/query-results?startYear=${startYear}&endYear=${endYear}&_=${timestamp}`;
+    const url = `http://localhost:3000/api/query-results?startYear=${startYear}&endYear=${endYear}&railroadName=${railroadName}&_=${timestamp}`;
     
     fetch(url)
       .then(response => {
@@ -112,7 +112,7 @@ function App() {
         <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
           <Sidebar 
             isSidebarOpen={isSidebarOpen} 
-            onDateChange={handleDateChange}
+            onChange={handleChange}
             fetchQueryResults={fetchQueryResults}
           />
         </div>
