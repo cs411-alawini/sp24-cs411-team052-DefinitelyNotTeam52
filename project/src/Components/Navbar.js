@@ -1,8 +1,9 @@
 import React from 'react';
 import './Navbar.css'; // Make sure this path is correct
 import TitleIcon from './TitleIcon.png'; // Ensure this path is correct too
+import { Link } from 'react-router-dom';
 
-function Navbar({ onLoginClick }) {
+function Navbar() {
   return (
     <div className="navbar">
       <div className="navbar-logo">
@@ -12,9 +13,10 @@ function Navbar({ onLoginClick }) {
         <input type="text" placeholder="Search..." />
       </div>
       <div className="user-section">
-        {/* onLoginClick is called when the login button is clicked */}
-        <button onClick={onLoginClick}>Login</button>
-        <button>Settings</button>
+      <Link to="/" style={{ marginRight: '20px' }} className='btn btn-primary'>Home</Link>
+      <Link to="/add" style={{ marginRight: '20px' }} className='btn btn-primary'>Add</Link>
+      <Link to="/modify" style={{ marginRight: '20px' }} className='btn btn-primary'>Modify</Link>
+      <Link to="/delete" style={{ marginRight: '20px' }} className='btn btn-primary'>Delete</Link>
       </div>
     </div>
   );

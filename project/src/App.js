@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-// import './style.css';
 import Map from './Components/Map.js';  
 import Navbar from './Components/Navbar.js'; 
 import Sidebar from './Components/Sidebar.js'; 
 import LoginModal from './Components/Login'; 
-//import TableView from './Components/TableView';
-
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AddPage from "./add.js";
+import ModifyPage from "./modify.js";
+import DeletePage from "./delete.js";
 
 function App() {
   const [dateRange, setDateRange] = useState({startYear: 2013, endYear: 2022});
@@ -99,30 +99,44 @@ function App() {
 };
 
 
-  
-  return (
-    <div className={`App ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
-      <header className="App-header">
-        <Navbar onLoginClick={handleLoginClick} />
-        <button onClick={toggleSidebar} className={`toggle-button ${!isSidebarOpen ? 'collapsed' : ''}`}>
-          {isSidebarOpen ? '◀' : '▶'}
-        </button>
-      </header>
-      <div className="main-content">
-        <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
-          <Sidebar 
-            isSidebarOpen={isSidebarOpen} 
-            onDateChange={handleDateChange}
-            fetchQueryResults={fetchQueryResults}
-          />
-        </div>
-        <Map ref={mapRef} dateRange={dateRange} />
-      </div>
-      {isLoginModalOpen && (
-        <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseModal} />
-      )}
-    </div>
-  );
+return (
+  <Router>
+      <Navbar/>
+      <Routes>
+        <Route path="/" element={
+          
+          <div className={`App ${isSidebarOpen ? '' : 'sidebar-collapsed'}`}>
+          <header className="App-header">
+            <button onClick={toggleSidebar} className={`toggle-button ${!isSidebarOpen ? 'collapsed' : ''}`}>
+              {isSidebarOpen ? '◀' : '▶'}
+            </button>
+          </header>
+          <div className="main-content">
+            <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
+              <Sidebar 
+                isSidebarOpen={isSidebarOpen} 
+                onDateChange={handleDateChange}
+                fetchQueryResults={fetchQueryResults}
+              />
+            </div>
+            <Map ref={mapRef} dateRange={dateRange}/>
+          </div>
+          </div>
+          } />
+        {/* <Route path="/manage" element={<ManagePage />}> */}
+        <Route path="add" element={<AddPage />} />
+        <Route path="modify" element={<ModifyPage />} />
+        <Route path="delete" element={<DeletePage />} />
+        {/* </Route> */}
+      </Routes>
+    {/* </div> */}
+
+    {/* {isLoginModalOpen && (
+      <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseModal} />
+    )} */}
+  {/* </div> */}
+  </Router>
+);
   
 }
 
