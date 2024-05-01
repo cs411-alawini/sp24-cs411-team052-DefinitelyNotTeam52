@@ -11,13 +11,16 @@ const MapComponent = forwardRef((props, ref) => {
   const [accidents, setAccidents] = useState([]);
   const [selectedAccident, setSelectedAccident] = useState(null);
   const [timerId, setTimerId] = useState(null);
+  const { dateRange } = props;
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/accidents')
+    const url = `http://localhost:3000/api/accidents?startYear=${dateRange.startYear}&endYear=${dateRange.endYear}&_=${dateRange.timestamp}`;
+    fetch(url)
       .then(response => response.json())
       .then(data => setAccidents(data))
       .catch(error => console.error('Error fetching accidents:', error));
-  }, []);
+  }, [dateRange]);  // 当 dateRange 改变时重新加载数据
+
 
   const handleMouseOver = (accident) => {
     if (timerId) clearTimeout(timerId);
@@ -65,10 +68,10 @@ const MapComponent = forwardRef((props, ref) => {
             >
               <div>
                 <h2>Accident Detail</h2>
-                <p><strong>Date:</strong> {selectedAccident.date}</p>
-                <p><strong>Railroad:</strong> {selectedAccident.railroad}</p>
-                <p><strong>Total Derail:</strong> {selectedAccident.total_derail}</p>
-                <p><strong>Accident Cause:</strong> {selectedAccident.acc_cause}</p>
+                <p><strong>Date:</strong> {selectedAccident.date}</p >
+                <p><strong>Railroad:</strong> {selectedAccident.railroad}</p >
+                <p><strong>Total Derail:</strong> {selectedAccident.total_derail}</p >
+                <p><strong>Accident Cause:</strong> {selectedAccident.acc_cause}</p >
               </div>
             </InfoWindow>
           )}

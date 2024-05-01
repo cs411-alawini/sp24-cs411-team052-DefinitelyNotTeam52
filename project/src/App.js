@@ -99,7 +99,6 @@ function App() {
 };
 
 
-  
 return (
   <Router>
       <Navbar/>
@@ -138,7 +137,6 @@ return (
   {/* </div> */}
   </Router>
 );
-
   
 }
 
