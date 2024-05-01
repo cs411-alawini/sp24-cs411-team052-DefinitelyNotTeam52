@@ -40,8 +40,8 @@ function App() {
     setIsSidebarOpen(!isSidebarOpen); // 切换侧边栏状态
   };
 
-  const handleDateChange = (start, end, timestamp) => {
-    setDateRange({ startYear: start, endYear: end, timestamp });
+  const handleChange = (start, end, name, timestamp) => {
+    setDateRange({ startYear: start, endYear: end, railroadName: name ,timestamp });
 };
 
   // 函数用于从后端获取查询结果并设置状态
@@ -115,7 +115,7 @@ return (
             <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
               <Sidebar 
                 isSidebarOpen={isSidebarOpen} 
-                onDateChange={handleDateChange}
+                onChange={handleChange}
                 fetchQueryResults={fetchQueryResults}
               />
             </div>

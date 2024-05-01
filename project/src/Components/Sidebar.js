@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Sidebar.css'; // Assuming you will create a separate CSS file for the Sidebar
 // import './../style.css';
-function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange}) {
+function Sidebar({ isSidebarOpen, fetchQueryResults, onChange}) {
     const [startYear, setStartYear] = useState('');
     const [endYear, setEndYear] = useState('');
     const [railroadName, setRailroadName] = useState('');  // 默认为BNSF
@@ -22,14 +22,17 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange}) {
         fetchQueryResults(startYear, endYear, railroadName, timestamp); // Example: Adjust this to match your actual fetching logic
     };
 
+    
+
     const handleUpdateMap = () => {
         if (parseInt(startYear) > parseInt(endYear)) {
             setErrorMessage('Start year must not be greater than end year.');
             return;
         }
         setErrorMessage('');
+        console.log("Submitting Query with:", startYear, endYear, railroadName);
         const timestamp = new Date().getTime();
-        onDateChange(startYear, endYear, timestamp);
+        onChange(startYear, endYear, railroadName, timestamp);
     };
 
     return (

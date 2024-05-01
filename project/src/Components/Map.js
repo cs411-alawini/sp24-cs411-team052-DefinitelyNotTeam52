@@ -14,10 +14,13 @@ const MapComponent = forwardRef((props, ref) => {
   const { dateRange } = props;
 
   useEffect(() => {
-    const url = `http://localhost:3000/api/accidents?startYear=${dateRange.startYear}&endYear=${dateRange.endYear}&_=${dateRange.timestamp}`;
+    const url = `http://localhost:3000/api/accidents?startYear=${dateRange.startYear}&endYear=${dateRange.endYear}&railroadName=${dateRange.railroadName}&_=${dateRange.timestamp}`;    
     fetch(url)
       .then(response => response.json())
-      .then(data => setAccidents(data))
+      .then(data => {
+        console.log('API data:', data);  // 查看API返回的数据
+        setAccidents(data);
+    })
       .catch(error => console.error('Error fetching accidents:', error));
   }, [dateRange]);  // 当 dateRange 改变时重新加载数据
 

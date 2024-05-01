@@ -48,6 +48,7 @@ router.get('/query-results', async (req, res) => {
 
 router.get('/accidents', async (req, res) => {
   const { startYear = 2013, endYear = 2022 } = req.query; // 提供默认值
+  const railroadName = req.query.railroadName || 'BNSF';
 
   const sqlQuery = `
     SELECT ACCIDNO AS "id", LATITUDE AS "latitude", LONGITUD AS "longitude", 
@@ -60,11 +61,12 @@ router.get('/accidents', async (req, res) => {
       AND RR_ACCIDENTS.ACC_TYPE = 1     
       AND RR_ACCIDENTS.TRAIN_TYPE = 'F'     
       AND RR_ACCIDENTS.TRACK_TYPE = 'MS'     
-      AND YEAR(RR_ACCIDENTS.DATE) BETWEEN ? AND ?;
+      AND YEAR(RR_ACCIDENTS.DATE) BETWEEN ? AND ?
+      AND RR_CLASS.RAILROAD_SUCCESSOR = ?;
   `;
 
   try {
-      const [rows] = await pool.query(sqlQuery, [startYear, endYear]);
+      const [rows] = await pool.query(sqlQuery, [startYear, endYear, railroadName]);
       res.json(rows);
   } catch (err) {
       console.error('Error when fetching accidents data', err);
