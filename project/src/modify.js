@@ -45,6 +45,36 @@ function ModifyPage() {
         });
     };
 
+    const handleAdvancedAction = (event) => {
+        event.preventDefault();
+        console.log("Advanced Action Triggered");
+        // alert('Performing advanced action!');
+        // Here, you can implement what this advanced action does, e.g., fetching more complex data
+        // Example fetch call
+        const advancedInputs = {
+            advancedInput1: inputs.input1,
+            advancedInput2: inputs.input2,
+            advancedInput3: inputs.input3,
+            advancedInput4: inputs.input4
+        }
+        fetch('http://localhost:3000/api/advanced-action', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(advancedInputs)
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Advanced data:', data.message);
+                alert('Advanced data loaded!');
+            })
+            .catch(error => {
+                console.error('Error fetching advanced data:', error.error);
+                alert('Failed to fetch advanced data');
+            });
+    };
+
     return (
         <div style={{
             display: 'flex',
@@ -54,7 +84,7 @@ function ModifyPage() {
             minHeight: '100vh',
             backgroundColor: '#f0f0f0'
         }}>
-            <h1 style={{ color: '#333', marginBottom: '20px' }}>Add New Entry</h1>
+            <h1 style={{ color: '#333', marginBottom: '7px' }}>Add New Entry</h1>
             <form onSubmit={handleSubmit} style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -86,15 +116,24 @@ function ModifyPage() {
                         />
                     </div>
                 ))}
-                <button type="submit" style={{
-                    padding: '10px 15px',
-                    color: 'white',
-                    backgroundColor: '#007bff',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    marginTop: '10px'
-                }}>Submit</button>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <button type="submit" style={{
+                        padding: '10px 15px',
+                        color: 'white',
+                        backgroundColor: '#007bff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                    }}>Submit</button>
+                    <button type="button" onClick={handleAdvancedAction} style={{
+                        padding: '10px 15px',
+                        color: 'white',
+                        backgroundColor: '#dc3545',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                    }}>Advanced Action</button>
+                </div>
             </form>
         </div>
     );
