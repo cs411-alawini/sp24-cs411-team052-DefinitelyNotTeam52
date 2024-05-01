@@ -10,6 +10,7 @@ import LoginModal from './Components/Login';
 
 
 function App() {
+  const [dateRange, setDateRange] = useState({startYear: 2013, endYear: 2022});
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const [view, setView] = useState('map'); // 默认视图为地图
   const [queryResults, setQueryResults] = useState(null); // 用于存储查询结果
@@ -38,6 +39,10 @@ function App() {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen); // 切换侧边栏状态
   };
+
+  const handleDateChange = (start, end, timestamp) => {
+    setDateRange({ startYear: start, endYear: end, timestamp });
+};
 
   // 函数用于从后端获取查询结果并设置状态
   const fetchQueryResults = (startYear, endYear, railroadName) => {
@@ -107,10 +112,11 @@ function App() {
         <div className={`sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
           <Sidebar 
             isSidebarOpen={isSidebarOpen} 
+            onDateChange={handleDateChange}
             fetchQueryResults={fetchQueryResults}
           />
         </div>
-        <Map ref={mapRef}/>
+        <Map ref={mapRef} dateRange={dateRange} />
       </div>
       {isLoginModalOpen && (
         <LoginModal isOpen={isLoginModalOpen} onClose={handleCloseModal} />
