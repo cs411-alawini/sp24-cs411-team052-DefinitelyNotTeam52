@@ -168,4 +168,40 @@ router.post('/delete', async (req, res) => {
   }
 });
 
+router.post('/derailment-causes', async (req, res) => {
+  console.log("HAHA");
+  try {
+    const [result, fields] = await pool.query('CALL Derailment_cause_rate_recent_ten_years();');
+      res.status(200).json({ success: true, message: result[0] });
+    } catch (error) {
+        // 处理任何可能的数据库错误
+        console.error('SP ERROR:', error);
+        // res.status(500).json({ success: false, message: 'Failed to load SP', error: error.message });
+    }
+});
+
+router.post('/top15-traffic', async (req, res) => {
+  try {
+    const [result, fields] = await pool.query('CALL Top_15_Railroad_traffic_ten_years();');
+      res.status(200).json({ success: true, message: result[0] });
+    } catch (error) {
+        // 处理任何可能的数据库错误
+        console.error('SP ERROR:', error);
+        // res.status(500).json({ success: false, message: 'Failed to load SP', error: error.message });
+    }
+});
+
+router.post('/advanced-action', async (req, res) => {
+  const {advancedInput1,advancedInput2,advancedInput3,advancedInput4} = req.body;
+
+  try {
+    const results = await pool.query('CALL UpdateTrafficData(?,?,?,?);', [advancedInput1,advancedInput2,advancedInput3,advancedInput4]);
+      res.status(200).json({ success: true, message: results });
+    } catch (error) {
+        // 处理任何可能的数据库错误
+        console.error('SP ERROR:', error);
+        res.status(500).json({ success: false, message: 'Failed to load SP', error: error.message });
+    }
+});
+
 module.exports = router;

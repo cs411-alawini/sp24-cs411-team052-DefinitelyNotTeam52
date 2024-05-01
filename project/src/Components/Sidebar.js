@@ -22,7 +22,107 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onChange}) {
         fetchQueryResults(startYear, endYear, railroadName, timestamp); // Example: Adjust this to match your actual fetching logic
     };
 
-    
+    const fetchStoredProcResults = () => {
+        console.log("LOL");
+        const url = `http://localhost:3000/api/derailment-causes`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify()
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Stored Procedure Data:', data);
+                // Open a new window and write the results to it
+          const newWindow = window.open();
+          newWindow.document.write(`
+            <html>
+            <head>
+              <title>Results</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                table { width: 100%; border-collapse: collapse; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+              </style>
+            </head>
+            <body>
+              <h1>Results</h1>
+              <table>
+                <tr>
+                  <th>Cause_code</th>
+                  <th>Cause_name</th>
+                  <th>Derailment Rate</th>
+                </tr>
+                ${data.message.map(item => `
+                  <tr>
+                    <td>${item.Cause_Code}</td>
+                    <td>${item.Cause_Name}</td>
+                    <td>${item.derailment_rate}</td>
+                  </tr>
+                `).join('')}
+              </table>
+            </body>
+            </html>
+          `);
+            })
+            .catch(error => {
+                console.error('Failed to fetch stored procedure data:', error);
+                alert('Failed to load data');
+            });
+    };
+
+    const fetchTopTraffic = () => {
+        console.log("LOL");
+        const url = `http://localhost:3000/api/top15-traffic`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify()
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Stored Procedure Data:', data);
+                // Open a new window and write the results to it
+          const newWindow = window.open();
+          newWindow.document.write(`
+            <html>
+            <head>
+              <title>Results</title>
+              <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                table { width: 100%; border-collapse: collapse; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+              </style>
+            </head>
+            <body>
+              <h1>Results</h1>
+              <table>
+                <tr>
+                  <th>Railroad</th>
+                  <th>Class</th>
+                  <th>Train Miles</th>
+                </tr>
+                ${data.message.map(item => `
+                  <tr>
+                    <td>${item.RAILROAD_SUCCESSOR}</td>
+                    <td>${item.RRCLASSIFICATION}</td>
+                    <td>${item.train_mile}</td>
+                  </tr>
+                `).join('')}
+              </table>
+            </body>
+            </html>
+          `);
+            })
+            .catch(error => {
+                console.error('Failed to fetch stored procedure data:', error);
+                alert('Failed to load data');
+            });
+    };
 
     const handleUpdateMap = () => {
         if (parseInt(startYear) > parseInt(endYear)) {
@@ -69,9 +169,14 @@ function Sidebar({ isSidebarOpen, fetchQueryResults, onChange}) {
             </li>
             
             <button onClick={handleQuery}>
-                Load Query Results
+                Load Derailment Rate
             </button>
-
+            <button onClick={fetchStoredProcResults}>
+                Load Recent Ten Years' Derailment Causes
+            </button>
+            <button onClick={fetchTopTraffic}>
+                Load Recent Ten Years' Top 15 Traffic
+            </button>
             <button onClick={handleUpdateMap}>
                 Update Map
             </button>
