@@ -16,5 +16,4 @@ To access gcp database, you need to:
     npm install express;
     npm install concurrently --save-dev
     npm install --save-dev envify terser uglifyify
-2. 
 
