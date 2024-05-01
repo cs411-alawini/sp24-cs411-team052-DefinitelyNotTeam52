@@ -18,6 +18,7 @@ router.get('/query-results', async (req, res) => {
 
     const startYear = req.query.startYear || '2013';
     const endYear = req.query.endYear || '2022'; 
+    const railroadName = req.query.railroadName || 'BNSF';
 
     // if (parseInt(startYear) > parseInt(endYear)) {
     //   return res.status(400).json({ message: "Start year must not be greater than end year." });
@@ -34,6 +35,7 @@ router.get('/query-results', async (req, res) => {
           AND RR_ACCIDENTS.TRACK_TYPE = 'MS'
           AND YEAR(RR_ACCIDENTS.\`DATE\`) >= ?
           AND YEAR(RR_ACCIDENTS.\`DATE\`) <= ?
+          AND RR_CLASS.RAILROAD_SUCCESSOR = ?
           GROUP BY RR_CLASS.RAILROAD_SUCCESSOR
       ),
       traffic AS (
@@ -43,6 +45,7 @@ router.get('/query-results', async (req, res) => {
           WHERE RR_CLASS.RRCLASSIFICATION = 1
           AND CONCAT('20', RR_TRAFFIC.IYR) >= ?
           AND CONCAT('20', RR_TRAFFIC.IYR) <= ?
+          AND RR_CLASS.RAILROAD_SUCCESSOR = ?
           GROUP BY RR_CLASS.RAILROAD_SUCCESSOR
       )
       SELECT accident.rr AS company, (accident.derailment / traffic.mile) * 1000000 AS derailment_rate
@@ -83,7 +86,7 @@ router.get('/query-results', async (req, res) => {
     // }
 
     try {
-      const [results] = await pool.query(sqlQuery, [startYear, endYear, startYear, endYear]);  // Pass parameters to the query
+      const [results] = await pool.query(sqlQuery, [startYear, endYear, railroadName, startYear, endYear, railroadName]);
       res.json(results);
     } catch (err) {
       console.error('Error executing query', err);
