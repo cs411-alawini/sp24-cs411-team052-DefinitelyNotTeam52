@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Sidebar.css'; // Assuming you will create a separate CSS file for the Sidebar
 // import './../style.css';
-function Sidebar({ isSidebarOpen, fetchQueryResults }) {
+function Sidebar({ isSidebarOpen, fetchQueryResults, onDateChange }) {
     const [startYear, setStartYear] = useState('');
     const [endYear, setEndYear] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -19,6 +19,16 @@ function Sidebar({ isSidebarOpen, fetchQueryResults }) {
         const timestamp = new Date().getTime();
         // Call the fetchQueryResults function with parameters and timestamp
         fetchQueryResults(startYear, endYear, timestamp); // Example: Adjust this to match your actual fetching logic
+    };
+
+    const handleUpdateMap = () => {
+        if (parseInt(startYear) > parseInt(endYear)) {
+            setErrorMessage('Start year must not be greater than end year.');
+            return;
+        }
+        setErrorMessage('');
+        const timestamp = new Date().getTime();
+        onDateChange(startYear, endYear, timestamp);
     };
 
     return (
@@ -85,6 +95,9 @@ function Sidebar({ isSidebarOpen, fetchQueryResults }) {
             
             <button onClick={handleQuery}>
                 Load Query Results
+            </button>
+            <button onClick={handleUpdateMap}>
+                Update Map
             </button>
             {errorMessage && <div style={{ color: 'red', marginTop: '10px' }}>{errorMessage}</div>}
         </div>
