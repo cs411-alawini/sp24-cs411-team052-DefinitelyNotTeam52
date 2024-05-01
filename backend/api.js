@@ -150,7 +150,7 @@ router.post('/delete', async (req, res) => {
       return res.status(400).json({ success: false, message: 'input1 is required for deletion' });
   }
 
-  const sqlQuery = 'DELETE FROM RR_TRAFFIC WHERE TRAFFIC_CODE = ?';  // 确保替换 input1_column_name 为您的数据库中对应的列名称
+  const sqlQuery = 'DELETE FROM RR_TRAFFIC WHERE input1_column_name = ?';  // 确保替换 input1_column_name 为您的数据库中对应的列名称
 
   try {
       const result = await pool.query(sqlQuery, [input1]);
